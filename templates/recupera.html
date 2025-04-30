@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Dados</title>
+</head>
+<body>
+    <h1>Dados Armazenados no ChromaDB</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Frequência Média</th>
+                <th>Tom Médio</th>
+                <th>Taxa de Amostragem</th>
+                <th>Duração</th>
+                <th>Caminho do Áudio</th>
+                <th>Origem</th>
+                <th>Reproduzir Áudio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for metadata, document in zip(resultados['metadatas'], documentos) %}
+            <tr>
+                <td>{{ metadata.nome }}</td> 
+                <td>{{ document.frequencia_media }}</td> 
+                <td>{{ document.tom_medio }}</td> 
+                <td>{{ document.sample_rate }}</td> 
+                <td>{{ document.duracao }}</td> 
+                <td>{{ metadata.audio_path }}</td> 
+                <td>{{ metadata.source }}</td>
+                <td>
+                        <audio controls>
+                            <source src="{{ metadata.audio_path.replace('./', '../') }}" type="audio/mp3">
+                            Seu navegador não suporta o elemento de áudio.
+                        </audio>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
