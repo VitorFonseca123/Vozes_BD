@@ -5,6 +5,8 @@
 -venv\Scripts\activate<br>
 -Baixar MSVC - Desenvolvimento para desktop C++<br>
 -pip install -r requirements.txt<br>
+- caso baixe algum biblioteca nova use: pip freeze > requirements.txt
+
 
 
 # Rodar
