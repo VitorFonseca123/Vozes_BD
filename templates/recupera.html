@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Dados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='recuperar.js') }}"></script>
 </head>
 <body>
     <h1>Dados Armazenados no ChromaDB</h1>
@@ -35,6 +37,11 @@
                             <source src="{{ metadata.audio_path.replace('./', '../') }}" type="audio/mp3">
                             Seu navegador não suporta o elemento de áudio.
                         </audio>
+                </td>
+                <td class="td-excluir">
+                    <button class="btn-excluir" onclick="confirmarExclusao()">
+                        Excluir
+                    </button>
                 </td>
             </tr>
             {% endfor %}

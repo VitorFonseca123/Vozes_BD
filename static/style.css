@@ -1,0 +1,23 @@
+.td-excluir{
+    border: 0px;
+}
+.btn-excluir {
+    background-color: #eb301b; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;    
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .btn-excluir:hover {
+    background-color: #c0392b; 
+    transform: scale(1.05);
+  }
+  
+  .btn-excluir:active {
+    background-color: #a93226;
+    transform: scale(0.98);
+  }
+  
