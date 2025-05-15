@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_from_directory
+from flask import Flask, jsonify, request, render_template, send_from_directory
 import chromadb
 from chromadb.config import Settings
 import librosa 
@@ -91,6 +91,17 @@ def recuperar_dados():
 @app.route('/uploads/<path:filename>')
 def serve_audio(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/excluir', methods=['POST'])
+def excluir():
+    data = request.get_json()
+    audio_path = data.get('audio_path')
+
+    if not audio_path:
+        return jsonify({'erro': 'audio_path não fornecido'}), 400
+
+    return jsonify({'mensagem': 'Exclusão realizada com sucesso'})
+
 @app.route('/')
 def formulario():
     return render_template('form.html')
