@@ -15,11 +15,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 def iniciaDB():
-    client = chromadb.PersistentClient(path="./chromadb")
-'''
+
+    '''
     precisa configurar a collection
     https://docs.trychroma.com/docs/collections/configure
-'''
+    '''
+    client = chromadb.PersistentClient(path="./chromadb")
     try:
         collection = client.create_collection(name="teste")
     except chromadb.errors.InternalError as e:
