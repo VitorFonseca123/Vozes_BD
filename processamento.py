@@ -1,3 +1,4 @@
+import json
 import librosa
 import numpy as np
 
@@ -18,19 +19,6 @@ def processa_audio(arquivo_audio, collection):
         #frequência média
         spectral_centroid = float(librosa.feature.spectral_centroid(y=y, sr=sr).mean())
 
-        resultados = collection.get(include=["embeddings", "metadatas"])
-        embeddings = np.array(resultados["embeddings"])
-        
-        minimos = embeddings.min(axis=0)  
-        maximos = embeddings.max(axis=0)  
-
-        embeddings_norm = np.array([
-            [min_max_normalize(val, minimos[i], maximos[i]) for i, val in enumerate(embedding)]
-            for embedding in embeddings
-            ])
-
-        print(embeddings_norm)
-
 
         document = {
             "frequencia_media": spectral_centroid, 
@@ -38,11 +26,56 @@ def processa_audio(arquivo_audio, collection):
             #retirei Sample rate, pois todos os audios tem a mesma taxa de amostragem
         
         }
+        
+        resultados = collection.get(include=["documents"])
+        
+        if not resultados["documents"]:
+            return document, []
+        
+
+        documentos = [json.loads(doc) for doc in resultados["documents"]]
+        embeddings = []
+        for doc in documentos:
+            freq = doc["frequencia_media"]
+            tom = doc["tom_medio"] 
+            embeddings.append([freq, tom])  
+        #print(embeddings)
+        #print(valores)
+        embeddings= np.array(embeddings)
+        minimos = embeddings.min(axis=0)
+        maximos = embeddings.max(axis=0)
+
+        embeddings_norm = []
+
+        for embedding in embeddings:
+            normalized_embedding = []
+            for i, val in enumerate(embedding):
+                normalized_val = min_max_normalize(val, minimos[i], maximos[i])
+                normalized_embedding.append(normalized_val)
+            embeddings_norm.append(normalized_embedding)
+        
+
+        
+        
+        
+        result = collection.get(include=["documents"])
+        ids = result["ids"]
+        print(ids)
+        if len(ids) != len(embeddings_norm):
+            raise ValueError("Número de IDs e embeddings não bate.")
+
+        collection.update(
+            ids=ids,
+            embeddings=embeddings_norm
+        )
+        print(collection.get(include=["embeddings"]))
+
         embedding = [ #normalizados
-            spectral_centroid / sr, #talvez?
-            pitch/sr,                   
+            min_max_normalize(spectral_centroid, minimos[0], maximos[0]),
+            min_max_normalize(pitch, minimos[1], maximos[1]),                   
             #retirei Sample rate, pois todos os audios tem a mesma taxa de amostragem
-]
+        ]
+        
         return document, embedding
     except Exception as e:
         print(f"Erro ao processar o áudio: {e}")
