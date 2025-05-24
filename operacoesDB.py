@@ -1,13 +1,15 @@
 import processamento
 import json
 
-def insertion(collection, audio_path, audio_carac_json, nome):
+
+def insertion(collection, audio_path, audio_carac_json, nome, embeddings):
     collection.add(
         documents=[audio_carac_json],  
+        embeddings=[embeddings],
         metadatas=[{"source": "formulario", "nome": nome, "audio_path": audio_path.replace("\\", "/")}],
         ids=["id_" + nome]
     )
-    print(collection.get(include=["documents", "metadatas"]))
+    #print(collection.get(include=["documents", "metadatas"]))
     return "Dados e áudio inseridos com sucesso no ChromaDB!"
     
 def insere_audios(collection):

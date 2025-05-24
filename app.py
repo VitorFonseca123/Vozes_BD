@@ -40,7 +40,7 @@ def processa_dados():
     if not nome:
         return "Erro: Nome não fornecido!", 400
 
-    print(f'Nome: {nome}')
+    #print(f'Nome: {nome}')
 
     audio = request.files.get('audio')
     if not audio:
@@ -50,9 +50,9 @@ def processa_dados():
     audio_path = os.path.join(app.config['UPLOAD_FOLDER'], audio.filename)
     audio.save(audio_path)
 
-    audio_carac = processamento.processa_audio(audio_path)
+    audio_carac, embeddings = processamento.processa_audio(audio_path, collection)
     audio_carac_json = json.dumps(audio_carac)
-    operacoesDB.insertion(collection, audio_path, audio_carac_json, nome)
+    operacoesDB.insertion(collection, audio_path, audio_carac_json, nome, embeddings)
     return "Dados processados com sucesso!", 200
 
 @app.route('/recuperar_dados')
