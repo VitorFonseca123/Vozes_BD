@@ -15,7 +15,7 @@ def processa_audio(arquivo_audio):
             "frequencia_media": spectral_centroid,
             "tom_medio": pitch,
             "sample_rate": sr,
-            "duracao": float(librosa.get_duration(y=y, sr=sr))
+            
         }
         return document
     except Exception as e:
