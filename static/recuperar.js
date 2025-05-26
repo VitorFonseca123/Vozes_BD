@@ -1,11 +1,11 @@
 function confirmarExclusao(botao) {
-    //console.log(botao);
+    var numCaminho = botao.closest('tr').cells.length - 4
     const confirmado = confirm("Tem certeza que deseja excluir?");
-    console.log(botao.closest('tr').cells[5].innerText);
+    console.log(botao.closest('tr').cells[numCaminho].innerText);
     if (confirmado == true) {
      
       const linha = botao.closest('tr');
-      const audioPath = linha.cells[5].innerText;
+      const audioPath = linha.cells[numCaminho].innerText;
       
       //mandar pro python
       fetch('/excluir', {

@@ -71,8 +71,15 @@ def excluir():
     data = request.get_json()
     audio_path = data.get('audio_path')
 
+    print(audio_path)
     if not audio_path:
         return jsonify({'erro': 'audio_path não fornecido'}), 400
+
+    print(audio_path)
+
+    collection.delete(
+        where = {"audio_path": audio_path }
+    )
 
     return jsonify({'mensagem': 'Exclusão realizada com sucesso'})
 
