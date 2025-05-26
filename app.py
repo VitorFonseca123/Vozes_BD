@@ -39,8 +39,8 @@ collection_per = iniciaDB("per")
 collection_carac_per = iniciaDB("carac_per")
 collection_carac = iniciaDB("carac")
 
-operacoesDB.insere_caracs(collection_carac)
-operacoesDB.insere_audios(collection_dub, collection_carac_dub, collection_carac)
+#collection_carac = operacoesDB.insere_caracs(collection_carac)
+#operacoesDB.insere_audios(collection_dub, collection_carac_dub, collection_carac)
     
 @app.route('/processa_dados', methods=['POST'])
 def processa_novo_audio():
