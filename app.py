@@ -48,7 +48,7 @@ def processa_novo_audio():
     nome_dub = request.form.get('dublador')
     per_genero = request.form.get('genero')
     per_idade = request.form.get('faixa etaria')
-    if not nome_per or not per_genero or not per_idade or not nome_dub:
+    if not nome_per or not per_genero or not per_idade:
         return "Erro: Dado não fornecido!", 400
 
     audio = request.files.get('audio')
@@ -59,8 +59,11 @@ def processa_novo_audio():
     audio.save(audio_path)
 
     #Insere novo personagem e caracteristicas (depois chama a busca de similaridade tb)
+    if nome_dub:
+        id_dub = "id_" + nome_dub.replace(" ", "_").lower()
+    else: id_dub = "unkown"
     operacoesDB.insertionPersonagem(collection_per, nome_per, per_genero, per_idade)
-    operacoesDB.insertionCarac(collection_carac_per, collection_carac, collection_dub, audio_path, nome_audio, nome_dub)
+    operacoesDB.insertionCarac(collection_carac_per, collection_carac, audio_path, nome_audio, id_dub)
 
 
 @app.route('/recuperar_dados')
