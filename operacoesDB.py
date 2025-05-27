@@ -17,8 +17,6 @@ def insertionCarac(collection_audio_feature, collection_features, audio_path, no
 
         # Retrieve only the **feature and actor IDs**, avoiding dicts
         feature_entry = collection_features.get(ids=["id_" + feature_name])
-        print(collection_features.get(include=["documents", "metadatas"]))
-        print(feature_entry)
         feature_id = feature_entry["ids"][0]
 
         # ChromaDB requires metadatas to be **primitive types**
@@ -33,9 +31,9 @@ def insertionCarac(collection_audio_feature, collection_features, audio_path, no
             }],
             ids=["id_" + nome_audio + "_" + feature_name]
         )
-    
-    print(collection_audio_feature.get(include=["documents", "metadatas"]))
-    return "Dados de características do áudio inseridos com sucesso no ChromaDB!"
+    return 0
+    #print(collection_audio_feature.get(include=["documents", "metadatas"]))
+    #return "Dados de características do áudio inseridos com sucesso no ChromaDB!"
 
 def insertionDublador(collection_dub, nome, dub_genero, dub_idade):
     collection_dub.add(
@@ -62,9 +60,9 @@ def insertionPersonagem(collection_per, nome, per_genero, per_idade):
         }],
         ids=["id_" + nome.replace(" ", "_").lower()]
     )
-    
-    print(collection_per.get(include=["documents", "metadatas"]))
-    print("Dados de personagem inseridos com sucesso no ChromaDB!")
+    return 0
+    #print(collection_per.get(include=["documents", "metadatas"]))
+    #print("Dados de personagem inseridos com sucesso no ChromaDB!")
 
 def insere_caracs(collection_carac):
     caracs = [

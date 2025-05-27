@@ -38,7 +38,7 @@ collection_carac_dub = iniciaDB("carac_dub")
 collection_per = iniciaDB("per")
 collection_carac_per = iniciaDB("carac_per")
 collection_carac = iniciaDB("carac")
-
+#print(collection_carac_per.get(include=["documents", "metadatas"]))
 #collection_carac = operacoesDB.insere_caracs(collection_carac)
 #operacoesDB.insere_audios(collection_dub, collection_carac_dub, collection_carac)
 
@@ -64,7 +64,7 @@ def processa_novo_audio():
     else: id_dub = "unkown"
     operacoesDB.insertionPersonagem(collection_per, nome_per, per_genero, per_idade)
     operacoesDB.insertionCarac(collection_carac_per, collection_carac, audio_path, nome_audio, id_dub)
-
+    return "Audio cadastrado com sucesso"
 
 @app.route('/recuperar_dados')
 def recuperar_dados():
