@@ -109,3 +109,4 @@ def insere_audios(collection_dub, collection_carac_dub, collection_carac):
             insertionCarac(collection_carac_dub, collection_carac, first_audio_path, folder_name, id_dub)
     print(collection_carac_dub.get(include=["documents", "metadatas"]))
     print("Processamento de pastas de áudio concluído!")
+
