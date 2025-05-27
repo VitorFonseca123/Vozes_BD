@@ -1,3 +1,4 @@
 /venv
 /chromadb
 /uploads
+/__pycache__/

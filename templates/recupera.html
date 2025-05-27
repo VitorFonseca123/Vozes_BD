@@ -13,6 +13,9 @@
         <thead>
             <tr>
                 <th>Nome</th>
+                <th>Dublador</th>
+                <th>Gênero</th>
+                <th>Faixa Etária</th>
                 <th>Frequência Média</th>
                 <th>Tom Médio</th>
                 <th>Taxa de Amostragem</th>
@@ -26,6 +29,9 @@
             {% for metadata, document in zip(resultados['metadatas'], documentos) %}
             <tr>
                 <td>{{ metadata.nome }}</td> 
+                <td>{{ metadata.dublador }}</td>
+                <td>{{ metadata.genero }}</td>
+                <td>{{ metadata.faixa_etaria }}</td>
                 <td>{{ document.frequencia_media }}</td> 
                 <td>{{ document.tom_medio }}</td> 
                 <td>{{ document.sample_rate }}</td> 

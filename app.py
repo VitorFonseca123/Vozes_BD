@@ -47,7 +47,7 @@ def processa_novo_audio():
     nome_per = request.form.get('nome')
     nome_dub = request.form.get('dublador')
     per_genero = request.form.get('genero')
-    per_idade = request.form.get('faixa etaria')
+    per_idade = request.form.get('faixa_etaria')
     if not nome_per or not per_genero or not per_idade:
         return "Erro: Dado não fornecido!", 400
 
