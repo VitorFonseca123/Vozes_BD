@@ -10,6 +10,19 @@
     <form action="/processa_dados" method="post" enctype="multipart/form-data">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required><br><br>
+        <label for="dublador">Dublador:</label>
+        <input type="text" id="dublador" name="dublador"><br><br>
+        <label for="genero">Gênero:</label>
+        <input type="text" id="genero" name="genero"><br><br>
+        <label for="faixa_etaria">Faixa Etária:</label>
+        <select name="faixa_etaria" id="faixa_etaria">
+        <option value="0-18">0-18 anos</option>
+        <option value="19-30">19-30 anos</option>
+        <option value="31-45">31-45 anos</option>
+        <option value="46-60">46-60 anos</option>
+        <option value="60+">60+ anos</option></select><br><br>
+
+
         <label for="audio">Áudio:</label>
         <input type="file" id="audio" name="audio" accept="audio/*" required><br><br>
 
