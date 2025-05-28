@@ -21,3 +21,26 @@
     transform: scale(0.98);
   }
   
+.td-atualizar{
+    border: 0px;
+}
+.btn-atualizar {
+    background-color: #4169e1; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;    
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .btn-atualizar:hover {
+    background-color: #4169e1; 
+    transform: scale(1.05);
+  }
+  
+  .btn-atualizar:active {
+    background-color: #4169e183;
+    transform: scale(0.98);
+  }
+  
