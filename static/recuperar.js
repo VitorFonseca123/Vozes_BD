@@ -1,5 +1,5 @@
 function confirmarExclusao(botao) {
-    var numCaminho = botao.closest('tr').cells.length - 4
+    var numCaminho = botao.closest('tr').cells.length - 5
     const confirmado = confirm("Tem certeza que deseja excluir?");
     console.log(botao.closest('tr').cells[numCaminho].innerText);
     if (confirmado == true) {
@@ -34,7 +34,7 @@ function confirmarExclusao(botao) {
   }
 
   function atualizar(botao) {
-    var numCaminho = botao.closest('tr').cells.length - 4
+    var numCaminho = botao.closest('tr').cells.length - 5
     const confirmado = confirm("Tem certeza que deseja atualizar?");
     console.log(botao.closest('tr').cells[numCaminho].innerText);
     if (confirmado == true) {
@@ -58,7 +58,6 @@ function confirmarExclusao(botao) {
         })
         .catch(error => {
             console.error('Erro:', error);
-            alert("Erro ao atualizar.");
         });
       
     } else {

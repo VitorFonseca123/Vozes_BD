@@ -53,6 +53,13 @@ def processa_dados():
     audio_carac, embeddings = processamento.processa_audio(audio_path, collection)
     audio_carac_json = json.dumps(audio_carac)
     operacoesDB.insertion(collection, audio_path, audio_carac_json, nome, embeddings)
+    busca= collection.query(
+        embeddings,
+        n_results= 2,
+
+    )
+    print ("IDs similares encontrados", busca['ids'])
+    print ("Distâncias: ", busca['distances'])
     return "Dados processados com sucesso!", 200
 
 @app.route('/recuperar_dados')
@@ -83,6 +90,7 @@ def excluir():
     os.remove(audio_path)
 
     return jsonify({'mensagem': 'Exclusão realizada com sucesso'})
+
 
 @app.route('/')
 def formulario():
