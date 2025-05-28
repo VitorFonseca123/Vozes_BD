@@ -1,11 +1,9 @@
 from flask import Flask, jsonify, request, render_template, send_from_directory
 import chromadb
 from chromadb.config import Settings
-import librosa 
 import os  
 import json
 import operacoesDB
-import processamento
 
 app = Flask(__name__)
 
@@ -38,8 +36,8 @@ collection_carac_dub = iniciaDB("carac_dub")
 collection_per = iniciaDB("per")
 collection_carac_per = iniciaDB("carac_per")
 collection_carac = iniciaDB("carac")
-#print(collection_carac_per.get(include=["documents", "metadatas"]))
-#collection_carac = operacoesDB.insere_caracs(collection_carac)
+#operacoesDB.insere_caracs(collection_carac)
+#print(collection_carac.get(include=["documents", "metadatas"]))
 #operacoesDB.insere_audios(collection_dub, collection_carac_dub, collection_carac)
 
 @app.route('/processa_dados', methods=['POST'])

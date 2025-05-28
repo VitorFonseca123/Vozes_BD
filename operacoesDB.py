@@ -1,33 +1,28 @@
 import processamento
-import json
 import os
 
 def insertionCarac(collection_audio_feature, collection_features, audio_path, nome_audio, id_dub):
     audio_carac = processamento.processa_audio(audio_path)
     
-    # If the function failed to process audio, skip insertion
     if audio_carac is None:
         print(f"⚠️ Erro ao processar o áudio: {audio_path}, pulando...")
         return "Erro no processamento do áudio, não foi inserido."
 
     for feature_name, feature_value in audio_carac.items():
-        # Ensure feature_value is valid (convert None to a default value)
         if feature_value is None:
-            feature_value = -1.0  # Default invalid value
+            feature_value = -1.0  
 
-        # Retrieve only the **feature and actor IDs**, avoiding dicts
         feature_entry = collection_features.get(ids=["id_" + feature_name])
         feature_id = feature_entry["ids"][0]
 
-        # ChromaDB requires metadatas to be **primitive types**
         collection_audio_feature.add(
-            documents=[str(feature_value)],  # Store feature value
+            documents=[str(feature_value)],  
             metadatas=[{
                 "source": "processamento",
                 "nome_audio": nome_audio,
                 "audio_path": audio_path.replace("\\", "/"),
-                "feature_ref": str(feature_id),  # Ensure **string type**
-                "dub_ref": id_dub  # Ensure **string type**
+                "feature_ref": str(feature_id), 
+                "dub_ref": id_dub  
             }],
             ids=["id_" + nome_audio + "_" + feature_name]
         )
@@ -37,7 +32,7 @@ def insertionCarac(collection_audio_feature, collection_features, audio_path, no
 
 def insertionDublador(collection_dub, nome, dub_genero, dub_idade):
     collection_dub.add(
-        documents=[nome],  # Store the voice actor's name
+        documents=[nome],  
         metadatas=[{
             "source": "formulario",
             "nome": nome,
@@ -51,7 +46,7 @@ def insertionDublador(collection_dub, nome, dub_genero, dub_idade):
 
 def insertionPersonagem(collection_per, nome, per_genero, per_idade):
     collection_per.add(
-        documents=[nome],  # Store the voice actor's name
+        documents=[nome],  
         metadatas=[{
             "source": "formulario",
             "nome": nome,
@@ -96,7 +91,7 @@ def insere_audios(collection_dub, collection_carac_dub, collection_carac):
     ]
 
     for audio_data in audios:
-        folder_name, dublador, genero_dublador, idade_dublador = audio_data  # Unpack the values
+        folder_name, dublador, genero_dublador, idade_dublador = audio_data  
         
         insertionDublador(collection_dub, dublador, genero_dublador, idade_dublador)
         
