@@ -58,8 +58,9 @@ def processa_dados():
 @app.route('/recuperar_dados')
 def recuperar_dados():
     resultados = collection.get(include=["documents", "metadatas"])
-
+    print(resultados['documents'])
     documentos = [json.loads(doc) for doc in resultados['documents']]
+    #print(documentos)
     return render_template('recupera.html', resultados=resultados, documentos=documentos, zip=zip)
 
 @app.route('/uploads/<path:filename>')
@@ -84,6 +85,28 @@ def excluir():
 
     return jsonify({'mensagem': 'Exclusão realizada com sucesso'})
 
+@app.route('/busca')
+def formulario_busca():
+    return render_template('busca.html')
+
+@app.route('/similares', methods=['POST'])
+def busca():
+    qtd = int(request.form.get('qtd'))
+    audio = request.files.get('audio')
+    audio_carac, embed = processamento.processa_audio(audio, collection)
+
+    resultado = collection.query(
+        query_embeddings=[embed],
+        n_results=qtd,
+        include=["documents", "metadatas"]
+    )
+    #print(resultado['documents'])
+    
+
+    documents = [json.loads(doc) for doc in resultado['documents'][0]]
+    #print(resultado['documents'][0])
+    
+    return  render_template('similares.html',  resultados = resultado, documentos=documents, zip=zip)
 @app.route('/')
 def formulario():
     return render_template('form.html')

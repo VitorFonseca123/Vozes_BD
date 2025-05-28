@@ -60,7 +60,7 @@ def processa_audio(arquivo_audio, collection):
         
         result = collection.get(include=["documents"])
         ids = result["ids"]
-        print(ids)
+        #print(ids)
         if len(ids) != len(embeddings_norm):
             raise ValueError("Número de IDs e embeddings não bate.")
 
@@ -68,7 +68,7 @@ def processa_audio(arquivo_audio, collection):
             ids=ids,
             embeddings=embeddings_norm
         )
-        print(collection.get(include=["embeddings"]))
+        #print(collection.get(include=["embeddings"]))
 
         embedding = [ #normalizados
             min_max_normalize(spectral_centroid, minimos[0], maximos[0]),
