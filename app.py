@@ -80,6 +80,7 @@ def excluir():
     collection.delete(
         where = {"audio_path": audio_path }
     )
+    os.remove(audio_path)
 
     return jsonify({'mensagem': 'Exclusão realizada com sucesso'})
 
