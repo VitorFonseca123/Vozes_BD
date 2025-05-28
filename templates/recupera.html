@@ -18,40 +18,36 @@
                 <th>Faixa Etária</th>
                 <th>Frequência Média</th>
                 <th>Tom Médio</th>
-                <th>Taxa de Amostragem</th>
-                <th>Duração</th>
                 <th>Caminho do Áudio</th>
                 <th>Origem</th>
                 <th>Reproduzir Áudio</th>
             </tr>
         </thead>
-        <tbody>
-            {% for metadata, document in zip(resultados['metadatas'], documentos) %}
-            <tr>
-                <td>{{ metadata.nome }}</td> 
-                <td>{{ metadata.dublador }}</td>
-                <td>{{ metadata.genero }}</td>
-                <td>{{ metadata.faixa_etaria }}</td>
-                <td>{{ document.frequencia_media }}</td> 
-                <td>{{ document.tom_medio }}</td> 
-                <td>{{ document.sample_rate }}</td> 
-                <td>{{ document.duracao }}</td> 
-                <td>{{ metadata.audio_path }}</td> 
-                <td>{{ metadata.source }}</td>
-                <td>
-                        <audio controls>
-                            <source src="{{ metadata.audio_path.replace('./', '../') }}" type="audio/mp3">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                </td>
-                <td class="td-excluir">
-                    <button class="btn-excluir" onclick="confirmarExclusao(this)">
-                        Excluir
-                    </button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
+            <tbody>
+        {% for item in lista_dados %}
+        <tr>
+            <td>{{ item.nome }}</td>
+            <td>{{ item.dublador }}</td>
+            <td>{{ item.genero }}</td>
+            <td>{{ item.faixa_etaria }}</td>
+            <td>{{ item.frequencia_media }}</td>
+            <td>{{ item.tom_medio }}</td>
+            <td>{{ item.audio_path }}</td>
+            <td>{{ item.source }}</td>
+            <td>
+                <audio controls>
+                    <source src="{{ item.audio_path.replace('./', '../') }}" type="audio/mp3">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            </td>
+            <td class="td-excluir">
+                <button class="btn-excluir" onclick="confirmarExclusao(this)">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
     </table>
 </body>
 </html>

@@ -4,6 +4,8 @@ from chromadb.config import Settings
 import os  
 import json
 import operacoesDB
+from collections import defaultdict
+
 
 app = Flask(__name__)
 
@@ -36,7 +38,11 @@ collection_carac_dub = iniciaDB("carac_dub")
 collection_per = iniciaDB("per")
 collection_carac_per = iniciaDB("carac_per")
 collection_carac = iniciaDB("carac")
-#operacoesDB.insere_caracs(collection_carac)
+carac = collection_carac.get(include=["documents", "metadatas"])
+if not carac['documents']:
+    print("Nenhuma característica encontrada, inserindo as características padrão...")
+    operacoesDB.insere_caracs(collection_carac)
+
 #print(collection_carac.get(include=["documents", "metadatas"]))
 #operacoesDB.insere_audios(collection_dub, collection_carac_dub, collection_carac)
 
@@ -64,12 +70,34 @@ def processa_novo_audio():
     operacoesDB.insertionCarac(collection_carac_per, collection_carac, audio_path, nome_audio, id_dub)
     return "Audio cadastrado com sucesso"
 
+
+
+
 @app.route('/recuperar_dados')
 def recuperar_dados():
-    resultados = collection_carac_dub.get(include=["documents", "metadatas"])
+    resultados = collection_carac_per.get(include=["documents", "metadatas"])
+    personagem = collection_per.get(include=["documents", "metadatas"])
+    dublador = collection_dub.get(include=["documents", "metadatas"])
 
-    documentos = [json.loads(doc) for doc in resultados['documents']]
-    return render_template('recupera.html', resultados=resultados, documentos=documentos, zip=zip)
+    print(resultados)
+    lista_dados = []
+
+    for nome, meta in zip(personagem['documents'], personagem['metadatas']):
+        item = {
+            'nome': nome,
+            'dublador': meta.get('dub_genero', ''),  
+            'genero': meta.get('dub_genero', ''),
+            'faixa_etaria': meta.get('dub_idade', ''),
+            'frequencia_media': meta.get('frequencia_media', ''),  
+            'tom_medio': meta.get('tom_medio', ''),                
+            'audio_path': meta.get('audio_path', ''),              
+            'source': meta.get('source', ''),
+        }
+        lista_dados.append(item)
+
+    return render_template('recupera.html', lista_dados=lista_dados)
+
+
 
 @app.route('/uploads/<path:filename>')
 def serve_audio(filename):
