@@ -79,24 +79,29 @@ def recuperar_dados():
     personagem = collection_per.get(include=["documents", "metadatas"])
     dublador = collection_dub.get(include=["documents", "metadatas"])
 
+    print(personagem)
+    print("\n")
     print(resultados)
+
     lista_dados = []
 
     for nome, meta in zip(personagem['documents'], personagem['metadatas']):
         item = {
             'nome': nome,
-            'dublador': meta.get('dub_genero', ''),  
+            'dublador': '',
             'genero': meta.get('dub_genero', ''),
             'faixa_etaria': meta.get('dub_idade', ''),
-            'frequencia_media': meta.get('frequencia_media', ''),  
-            'tom_medio': meta.get('tom_medio', ''),                
-            'audio_path': meta.get('audio_path', ''),              
+            'frequencia_media': '',
+            'tom_medio': '',
+            'audio_path': '',
             'source': meta.get('source', ''),
         }
+
+       
+
         lista_dados.append(item)
 
     return render_template('recupera.html', lista_dados=lista_dados)
-
 
 
 @app.route('/uploads/<path:filename>')

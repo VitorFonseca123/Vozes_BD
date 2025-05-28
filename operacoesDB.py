@@ -51,7 +51,7 @@ def insertionPersonagem(collection_per, nome, per_genero, per_idade):
             "source": "formulario",
             "nome": nome,
             "dub_genero": per_genero,
-            "dub_idade": per_idade
+            "dub_idade": per_idade,
         }],
         ids=["id_" + nome.replace(" ", "_").lower()]
     )
