@@ -31,7 +31,8 @@ def iniciaDB():
     
     return collection
     
-collection = iniciaDB()
+Audios_Collection = iniciaDB()
+Dubladores_Collection = iniciaDB()
 #operacoesDB.insere_audios(collection)
 
 @app.route('/processa_dados', methods=['POST'])
@@ -50,10 +51,10 @@ def processa_dados():
     audio_path = os.path.join(app.config['UPLOAD_FOLDER'], audio.filename)
     audio.save(audio_path)
 
-    audio_carac, embeddings = processamento.processa_audio(audio_path, collection)
+    audio_carac, embeddings = processamento.processa_audio(audio_path, Audios_Collection)
     audio_carac_json = json.dumps(audio_carac)
-    operacoesDB.insertion(collection, audio_path, audio_carac_json, nome, embeddings)
-    busca= collection.query(
+    operacoesDB.insertion(Audios_Collection, audio_path, audio_carac_json, nome, embeddings)
+    busca= Audios_Collection.query(
         embeddings,
         n_results= 2,
 
@@ -64,7 +65,7 @@ def processa_dados():
 
 @app.route('/recuperar_dados')
 def recuperar_dados():
-    resultados = collection.get(include=["documents", "metadatas"])
+    resultados = Audios_Collection.get(include=["documents", "metadatas"])
     print(resultados['documents'])
     documentos = [json.loads(doc) for doc in resultados['documents']]
     #print(documentos)
@@ -79,15 +80,13 @@ def excluir():
     data = request.get_json()
     audio_path = data.get('audio_path')
 
-    print(audio_path)
+    #print(audio_path)
     if not audio_path:
         return jsonify({'erro': 'audio_path não fornecido'}), 400
 
-    print(audio_path)
+    #print(audio_path)
 
-    collection.delete(
-        where = {"audio_path": audio_path }
-    )
+    operacoesDB.Excluir_audio(Audios_Collection, audio_path)
     os.remove(audio_path)
 
     return jsonify({'mensagem': 'Exclusão realizada com sucesso'})
@@ -100,9 +99,9 @@ def formulario_busca():
 def busca():
     qtd = int(request.form.get('qtd'))
     audio = request.files.get('audio')
-    audio_carac, embed = processamento.processa_audio(audio, collection)
+    audio_carac, embed = processamento.processa_audio(audio, Audios_Collection)
 
-    resultado = collection.query(
+    resultado = Audios_Collection.query(
         query_embeddings=[embed],
         n_results=qtd,
         include=["documents", "metadatas"]

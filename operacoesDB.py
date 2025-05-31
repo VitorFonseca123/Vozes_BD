@@ -19,3 +19,10 @@ def insere_audios(collection):
         audio_carac = processamento.processa_audio(item)
         audio_carac_json = json.dumps(audio_carac)
         insertion(collection, item, audio_carac_json, nome)
+
+def Excluir_audio(Audios_Collection, audio_path):
+     Audios_Collection.delete(
+        where = {"audio_path": audio_path }
+    )
+   
+    
