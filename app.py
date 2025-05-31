@@ -99,7 +99,15 @@ def formulario_busca():
 def busca():
     qtd = int(request.form.get('qtd'))
     audio = request.files.get('audio')
-    audio_carac, embed = processamento.processa_audio(audio, Audios_Collection)
+    audio = request.files.get('audio')
+    if not audio:
+        return "Erro: Áudio não fornecido!", 400
+
+    # Salva o arquivo  
+    audio_path = os.path.join(app.config['UPLOAD_FOLDER'], audio.filename)
+    audio.save(audio_path)
+
+    audio_carac, embed = processamento.processa_audio(audio_path, Audios_Collection)
 
     resultado = Audios_Collection.query(
         query_embeddings=[embed],
@@ -108,13 +116,14 @@ def busca():
     )
     #print(resultado['documents'])
     
+    
 
     docs_para_template = [json.loads(doc) for doc in resultado['documents'][0]]
     metas_para_template = resultado['metadatas'][0]
     dists_para_template = resultado['distances'][0]
     #print(resultado['documents'][0])
     
-    return render_template('similares.html', resultados_combinados=zip(metas_para_template, docs_para_template, dists_para_template))
+    return render_template('similares.html', resultados_combinados=zip(metas_para_template, docs_para_template, dists_para_template), audio_path=audio_path)
 @app.route('/')
 def formulario():
     return render_template('form.html')
