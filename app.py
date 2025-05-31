@@ -54,7 +54,7 @@ def processa_dados():
     audio_carac, embeddings = processamento.processa_audio(audio_path, Audios_Collection)
     audio_carac_json = json.dumps(audio_carac)
     operacoesDB.insertion(Audios_Collection, audio_path, audio_carac_json, nome, embeddings)
-    busca= Audios_Collection.query(
+    busca = Audios_Collection.query(
         embeddings,
         n_results= 2,
 
@@ -104,15 +104,17 @@ def busca():
     resultado = Audios_Collection.query(
         query_embeddings=[embed],
         n_results=qtd,
-        include=["documents", "metadatas"]
+        include=["documents", "metadatas", 'distances']
     )
     #print(resultado['documents'])
     
 
-    documents = [json.loads(doc) for doc in resultado['documents'][0]]
+    docs_para_template = [json.loads(doc) for doc in resultado['documents'][0]]
+    metas_para_template = resultado['metadatas'][0]
+    dists_para_template = resultado['distances'][0]
     #print(resultado['documents'][0])
     
-    return  render_template('similares.html',  resultados = resultado, documentos=documents, zip=zip)
+    return render_template('similares.html', resultados_combinados=zip(metas_para_template, docs_para_template, dists_para_template))
 @app.route('/')
 def formulario():
     return render_template('form.html')
