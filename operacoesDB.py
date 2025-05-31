@@ -3,20 +3,12 @@ import json
 
 
 def insertion(collection, audio_path, audio_carac_json, nome, embeddings):
-    if not embeddings:
-        collection.add(
-            documents=[audio_carac_json], 
-            embeddings=[[0,0]],  #  ele não deixa iniciar sem embeddings
-            metadatas=[{"source": "formulario", "nome": nome, "audio_path": audio_path.replace("\\", "/")}],
-            ids=["id_" + audio_path]
-        )
-    else:
-        collection.add(
+    collection.add(
             documents=[audio_carac_json],  
-            embeddings=[embeddings],
+            embeddings=embeddings,
             metadatas=[{"source": "formulario", "nome": nome, "audio_path": audio_path.replace("\\", "/")}],
             ids=["id_" + audio_path]
-        )
+            )
     #print(collection.get(include=["documents", "metadatas"]))
     return "Dados e áudio inseridos com sucesso no ChromaDB!"
     

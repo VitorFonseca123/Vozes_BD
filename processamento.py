@@ -30,7 +30,7 @@ def processa_audio(arquivo_audio, collection):
         resultados = collection.get(include=["documents"])
         
         if not resultados["documents"]:
-            return document, []
+            return document, [0]*len(document)
         
 
         documentos = [json.loads(doc) for doc in resultados["documents"]]
