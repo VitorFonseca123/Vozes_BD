@@ -16,7 +16,7 @@
                 <th>Frequência Média</th>
                 <th>Tom Médio</th>
                 <th>Caminho do Áudio</th>
-                <th>Origem</th>
+                <th>Dublador</th>
                 <th>Reproduzir Áudio</th>
             </tr>
         </thead>
@@ -27,7 +27,7 @@
                 <td>{{ document.frequencia_media }}</td> 
                 <td>{{ document.tom_medio }}</td> 
                 <td>{{ metadata.audio_path }}</td> 
-                <td>{{ metadata.source }}</td>
+                <td>{{ metadata.dublador }}</td>
                 <td>
                         <audio controls>
                             <source src="{{ metadata.audio_path.replace('./', '../') }}" type="audio/mp3">
