@@ -2,11 +2,11 @@ import processamento
 import json
 
 
-def insertion(collection, audio_path, audio_carac_json, nome, embeddings):
+def insertion(collection, audio_path, audio_carac_json, nome, embeddings, dublador):
     collection.add(
             documents=[audio_carac_json],  
             embeddings=embeddings,
-            metadatas=[{"source": "formulario", "nome": nome, "audio_path": audio_path.replace("\\", "/")}],
+            metadatas=[{"dublador": "id_"+dublador, "nome": nome, "audio_path": audio_path.replace("\\", "/")}],
             ids=["id_" + audio_path]
             )
     #print(collection.get(include=["documents", "metadatas"]))
@@ -25,4 +25,16 @@ def Excluir_audio(Audios_Collection, audio_path):
         where = {"audio_path": audio_path }
     )
    
+
+def insertion_dublador(collection, nome, dublador, dub_genero, dub_idade):
+    collection.add(
+        documents=[nome],  
+        metadatas=[{
+            "nome": nome,
+            "dub_genero": dub_genero,
+            "dub_idade": dub_idade
+        }],
+        ids=["id_" + nome.replace(" ", "_").lower()]
+    )
+    return "Dublador inserido com sucesso no ChromaDB!"
     

@@ -40,7 +40,7 @@ def processa_dados():
     nome = request.form.get('nome')
     if not nome:
         return "Erro: Nome não fornecido!", 400
-
+    dublador = request.form.get('dublador').lower()
     #print(f'Nome: {nome}')
 
     audio = request.files.get('audio')
@@ -53,7 +53,8 @@ def processa_dados():
 
     audio_carac, embeddings = processamento.processa_audio(audio_path, Audios_Collection)
     audio_carac_json = json.dumps(audio_carac)
-    operacoesDB.insertion(Audios_Collection, audio_path, audio_carac_json, nome, embeddings)
+    operacoesDB.insertion(Audios_Collection, audio_path, audio_carac_json, nome, embeddings, dublador)
+    
     busca = Audios_Collection.query(
         embeddings,
         n_results= 2,
