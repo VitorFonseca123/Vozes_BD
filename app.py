@@ -33,6 +33,10 @@ def iniciaDB():
     
 Audios_Collection = iniciaDB()
 Dubladores_Collection = iniciaDB()
+dub = Dubladores_Collection.get(include=["documents", "metadatas"])
+if not dub['documents']:
+    print("Nenhuma característica encontrada, inserindo as características padrão...")
+    operacoesDB.insere_dub(Dubladores_Collection)
 #operacoesDB.insere_audios(collection)
 
 @app.route('/processa_dados', methods=['POST'])
@@ -54,7 +58,7 @@ def processa_dados():
     audio_carac, embeddings = processamento.processa_audio(audio_path, Audios_Collection)
     audio_carac_json = json.dumps(audio_carac)
     operacoesDB.insertion(Audios_Collection, audio_path, audio_carac_json, nome, embeddings, dublador)
-    
+
     busca = Audios_Collection.query(
         embeddings,
         n_results= 2,

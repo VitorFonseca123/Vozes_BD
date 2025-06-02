@@ -37,4 +37,8 @@ def insertion_dublador(collection, nome, dublador, dub_genero, dub_idade):
         ids=["id_" + nome.replace(" ", "_").lower()]
     )
     return "Dublador inserido com sucesso no ChromaDB!"
-    
+
+def insere_dub(collection):
+    dubladores = [ 
+        "", ""
+    ]
