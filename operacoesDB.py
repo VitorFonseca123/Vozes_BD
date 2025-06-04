@@ -1,7 +1,7 @@
 import json
 import processamento
 import os
-from pydub import AudioSegment
+import shutil
 
 
 def insertion(collection, audio_path, nome, dublador):
@@ -16,13 +16,7 @@ def insertion(collection, audio_path, nome, dublador):
     #print(collection.get(include=["documents", "metadatas"]))
     return "Dados e áudio inseridos com sucesso no ChromaDB!"
     
-def insere_audios(collection):
-    folder = "audios"
-    for item in folder:
-        nome = item
-        audio_carac = processamento.processa_audio(item)
-        audio_carac_json = json.dumps(audio_carac)
-        insertion(collection, item, audio_carac_json, nome)
+
 
 def Excluir_audio(Audios_Collection, audio_path):
      Audios_Collection.delete(
@@ -42,8 +36,12 @@ def insertion_dublador(collection, nome, dub_genero, dub_idade):
     )
     return "Dublador inserido com sucesso no ChromaDB!"
 
-def insere_massa(dubladores_collection, audios_collection):
-    dubladores= [
+
+
+
+def insere_EDM(dubladores_collection, audios_collection):
+    
+    dubladores = [
         ["Agatha", "Karen Padrão", "Feminino", "Adulto"],
         ["Jaser", "Raphael Rossatto", "Masculino", "Adulto"],
         ["Lupi", "Lobinho", "Masculino", "Adulto"],
@@ -51,15 +49,40 @@ def insere_massa(dubladores_collection, audios_collection):
         ["Samuel", "Fred Mascarenhas", "Masculino", "Adulto"],
         ["Verissimo", "Guilherme Briggs", "Masculino", "Adulto"]
     ]
-    
+
+    os.makedirs('./uploads', exist_ok=True)
+
     for dublador in dubladores:
         personagem, nome, dub_genero, dub_idade = dublador
         dub_idade = dub_idade.lower()
+        
         insertion_dublador(dubladores_collection, nome, dub_genero, dub_idade)
-        audio_path = f"audios/{personagem}.mp3"
-        audio = AudioSegment.from_mp3(audio_path)
+        
+        personagem_audio_dir = f"audios/enigma do medo/{personagem}/"
+        
+        if not os.path.isdir(personagem_audio_dir):
+            print(f"Diretório não encontrado: {personagem_audio_dir}. Pulando este personagem.")
+            continue
 
+        for filename in os.listdir(personagem_audio_dir):
+            
+            if filename.endswith(".wav"):
+                origem_audio_path = os.path.join(personagem_audio_dir, filename)
+                destino_audio_path = os.path.join('./uploads', filename) 
 
+                try:
+                    
+                    shutil.copy(origem_audio_path, destino_audio_path)
+                    insertion(audios_collection, destino_audio_path, personagem, dublador[1].lower())
+                    #print(f"Áudio copiado: {origem_audio_path} -> {destino_audio_path}")
+                except FileNotFoundError:
+                    print(f"Erro: Arquivo não encontrado para copiar: {origem_audio_path}")
+                except Exception as e:
+                    print(f"Erro inesperado ao copiar o áudio {filename}: {e}")
+
+    return "Dados de dublador inseridos e áudios .wav copiados com sucesso!"
+
+ 
         
         
     return "Dados de dublador inseridos com sucesso no ChromaDB!"

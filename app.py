@@ -34,12 +34,12 @@ def iniciaDB(collection_name):
 
     return collection
     
-Audios_Collection = iniciaDB()
-Dubladores_Collection = iniciaDB()
+Audios_Collection = iniciaDB('Audios')
+Dubladores_Collection = iniciaDB('Dubladores')
 dub = Dubladores_Collection.get(include=["documents", "metadatas"])
 if not dub['documents']:
     print("Nenhuma característica encontrada, inserindo as características padrão...")
-    operacoesDB.insere_dub(Dubladores_Collection)
+    operacoesDB.insere_massa(Dubladores_Collection, Audios_Collection)
 #operacoesDB.insere_audios(collection)
 
 @app.route('/processa_dados', methods=['POST'])
@@ -54,7 +54,7 @@ def processa_dados():
     if not audio:
         return "Erro: Áudio não fornecido!", 400
     nome_audio = audio.filename
-    audio_path = os.path.join(app.config['UPLOAD_FOLDER'], audio.filename)
+    audio_path = os.path.join(app.config['UPLOAD_FOLDER'], nome_audio)
     audio.save(audio_path)
 
     
