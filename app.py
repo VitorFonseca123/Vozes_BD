@@ -39,7 +39,7 @@ Dubladores_Collection = iniciaDB('Dubladores')
 dub = Dubladores_Collection.get(include=["documents", "metadatas"])
 if not dub['documents']:
     print("Nenhuma característica encontrada, inserindo as características padrão...")
-    operacoesDB.insere_massa(Dubladores_Collection, Audios_Collection)
+    operacoesDB.insere_EDM(Dubladores_Collection, Audios_Collection)
 #operacoesDB.insere_audios(collection)
 
 @app.route('/processa_dados', methods=['POST'])
