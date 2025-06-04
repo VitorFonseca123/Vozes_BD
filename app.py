@@ -4,7 +4,10 @@ from chromadb.config import Settings
 import os  
 import json
 import operacoesDB
+from collections import defaultdict
+
 import processamento
+
 
 app = Flask(__name__)
 
@@ -15,20 +18,20 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-def iniciaDB():
+def iniciaDB(collection_name):
     '''
-    precisa configurar a collection
+    Configura a collection
     https://docs.trychroma.com/docs/collections/configure
     '''
     client = chromadb.PersistentClient(path="./chromadb")
     try:
-        collection = client.create_collection(name="teste")
+        collection = client.create_collection(name=collection_name)
     except chromadb.errors.InternalError as e:
         if "already exists" in str(e):
-            collection = client.get_collection(name="teste")
+            collection = client.get_collection(name=collection_name)
         else:
             raise e  
-    
+
     return collection
     
 Audios_Collection = iniciaDB()
@@ -50,22 +53,14 @@ def processa_dados():
     audio = request.files.get('audio')
     if not audio:
         return "Erro: Áudio não fornecido!", 400
-
-    # Salva o arquivo  
+    nome_audio = audio.filename
     audio_path = os.path.join(app.config['UPLOAD_FOLDER'], audio.filename)
     audio.save(audio_path)
 
-    audio_carac, embeddings = processamento.processa_audio(audio_path, Audios_Collection)
-    audio_carac_json = json.dumps(audio_carac)
-    operacoesDB.insertion(Audios_Collection, audio_path, audio_carac_json, nome, embeddings, dublador)
+    
+    operacoesDB.insertion(Audios_Collection, audio_path, nome, dublador)
 
-    busca = Audios_Collection.query(
-        embeddings,
-        n_results= 2,
-
-    )
-    print ("IDs similares encontrados", busca['ids'])
-    print ("Distâncias: ", busca['distances'])
+    
     return "Dados processados com sucesso!", 200
 
 @app.route('/recuperar_dados')
