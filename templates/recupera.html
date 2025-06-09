@@ -6,10 +6,34 @@
     <title>Recuperar Dados</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='recuperar.js') }}"></script>
+    <style>
+        /* Estilos básicos para a paginação */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination button, .pagination span {
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            cursor: pointer;
+        }
+        .pagination button:hover, .pagination span.active {
+            background-color: #e0e0e0;
+        }
+        .pagination span.active {
+            font-weight: bold;
+        }
+        .pagination button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
     <h1>Dados Armazenados no ChromaDB</h1>
-    <table border="1">
+    <table border="1" id="dataTable">
         <thead>
             <tr>
                 <th>Nome</th>
@@ -17,8 +41,9 @@
                 <th>Frequência Média</th>
                 <th>Tom Médio</th>
                 <th>Caminho do Áudio</th>
-                
                 <th>Reproduzir Áudio</th>
+                <th>Atualizar</th>
+                <th>Excluir</th>
             </tr>
         </thead>
         <tbody>
@@ -29,31 +54,112 @@
                 <td>{{document.frequencia_media}}</td>
                 <td>{{ document.tom_medio }}</td> 
                 <td>{{ metadata.audio_path }}</td> 
-                
                 <td>
-                        <audio controls>
-                            <source src="{{ metadata.audio_path.replace('./', '../') }}" type="audio/mp3">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
+                    <audio controls>
+                        <source src="{{ metadata.audio_path.replace('./', '../') }}" type="audio/mp3">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
                 </td>
-
                 <td class="td-atualizar">
                     <button class="btn-atualizar" onclick="atualizar(this)">
                         Atualizar
                     </button>
                 </td>
-                
                 <td class="td-excluir">
                     <button class="btn-excluir" onclick="confirmarExclusao(this)">
                         Excluir
                     </button>
                 </td>
-
-                
-
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <div class="pagination">
+        <button id="prevBtn">Anterior</button>
+        <span id="pageNumbers"></span>
+        <button id="nextBtn">Próximo</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('dataTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            const rowsPerPage = 10; // Número de linhas por página
+            let currentPage = 1;
+
+            function displayRows(page) {
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+
+                rows.forEach((row, index) => {
+                    row.style.display = (index >= start && index < end) ? '' : 'none';
+                });
+            }
+
+            function setupPagination() {
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+                const pageNumbersDiv = document.getElementById('pageNumbers');
+                pageNumbersDiv.innerHTML = ''; // Limpa os números de página existentes
+
+                for (let i = 1; i <= pageCount; i++) {
+                    const pageSpan = document.createElement('span');
+                    pageSpan.textContent = i;
+                    pageSpan.classList.add('page-number');
+                    if (i === currentPage) {
+                        pageSpan.classList.add('active');
+                    }
+                    pageSpan.addEventListener('click', () => {
+                        currentPage = i;
+                        displayRows(currentPage);
+                        updatePaginationButtons();
+                        updateActivePageNumber();
+                    });
+                    pageNumbersDiv.appendChild(pageSpan);
+                }
+            }
+
+            function updatePaginationButtons() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === pageCount;
+            }
+
+            function updateActivePageNumber() {
+                document.querySelectorAll('.page-number').forEach(span => {
+                    span.classList.remove('active');
+                });
+                document.querySelector(`.page-number:nth-child(${currentPage})`).classList.add('active');
+            }
+
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayRows(currentPage);
+                    updatePaginationButtons();
+                    updateActivePageNumber();
+                }
+            });
+
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    displayRows(currentPage);
+                    updatePaginationButtons();
+                    updateActivePageNumber();
+                }
+            });
+
+            // Inicializa a exibição da tabela e a paginação
+            displayRows(currentPage);
+            setupPagination();
+            updatePaginationButtons();
+        });
+    </script>
 </body>
 </html>
