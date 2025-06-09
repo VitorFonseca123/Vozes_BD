@@ -33,7 +33,7 @@
                 <td>{{ "%.2f" | format(document.frequencia_media) }}</td> 
                 <td>{{ "%.2f" | format(document.tom_medio) }}</td> 
                 <td>{{ metadata.audio_path }}</td> 
-                 <td>{{ "%.2f" | format((1 - distance) * 100) }}%</td> 
+                 <td>{{ "%.6f" | format(distance) }}%</td> 
                 <td>{{ metadata.dublador }}</td>
                 <td>
                         <audio controls>

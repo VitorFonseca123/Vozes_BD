@@ -37,10 +37,38 @@ def insertion_dublador(collection, nome, dub_genero, dub_idade):
     return "Dublador inserido com sucesso no ChromaDB!"
 
 
+def coleta_audios(dubladores_data, audios_collection, dubladores_collection,base_audio_path):
 
+    os.makedirs('./uploads', exist_ok=True)
+    
+    for dublador_info in dubladores_data:
+        personagem, nome, dub_genero, dub_idade = dublador_info
+        dub_idade = dub_idade.lower()
+
+        insertion_dublador(dubladores_collection, nome, dub_genero, dub_idade)
+
+        personagem_audio_dir = os.path.join(base_audio_path, personagem)
+
+        if not os.path.isdir(personagem_audio_dir):
+            print(f"Diretório não encontrado: {personagem_audio_dir}. Pulando este personagem.")
+            continue
+
+        for filename in os.listdir(personagem_audio_dir):
+            if filename.endswith(".mp3") or filename.endswith(".wav"):
+                origem_audio_path = os.path.join(personagem_audio_dir, filename)
+                destino_audio_path = os.path.join('./uploads', filename)
+
+                try:
+                    shutil.copy(origem_audio_path, destino_audio_path)
+                    insertion(audios_collection, destino_audio_path, personagem, dublador_info[1].lower())
+                except FileNotFoundError:
+                    print(f"Erro: Arquivo não encontrado para copiar: {origem_audio_path}")
+                except Exception as e:
+                    print(f"Erro inesperado ao copiar o áudio {filename}: {e}")
+
+    return "Dados inseridos e áudios copiados com sucesso!"
 
 def insere_EDM(dubladores_collection, audios_collection):
-    
     dubladores = [
         ["Agatha", "Karen Padrão", "Feminino", "Adulto"],
         ["Jaser", "Raphael Rossatto", "Masculino", "Adulto"],
@@ -49,47 +77,23 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Samuel", "Fred Mascarenhas", "Masculino", "Adulto"],
         ["Verissimo", "Guilherme Briggs", "Masculino", "Adulto"]
     ]
+    return coleta_audios(
+        dubladores,
+        audios_collection,
+        dubladores_collection,
+        "audios/enigma do medo/"
+    )
 
-    os.makedirs('./uploads', exist_ok=True)
 
-    for dublador in dubladores:
-        personagem, nome, dub_genero, dub_idade = dublador
-        dub_idade = dub_idade.lower()
-        
-        insertion_dublador(dubladores_collection, nome, dub_genero, dub_idade)
-        
-        personagem_audio_dir = f"audios/enigma do medo/{personagem}/"
-        
-        if not os.path.isdir(personagem_audio_dir):
-            print(f"Diretório não encontrado: {personagem_audio_dir}. Pulando este personagem.")
-            continue
+def insere_lol(dubladores_collection, audios_collection):
 
-        for filename in os.listdir(personagem_audio_dir):
-            
-            if filename.endswith(".wav"):
-                origem_audio_path = os.path.join(personagem_audio_dir, filename)
-                destino_audio_path = os.path.join('./uploads', filename) 
-
-                try:
-                    
-                    shutil.copy(origem_audio_path, destino_audio_path)
-                    insertion(audios_collection, destino_audio_path, personagem, dublador[1].lower())
-                    #print(f"Áudio copiado: {origem_audio_path} -> {destino_audio_path}")
-                except FileNotFoundError:
-                    print(f"Erro: Arquivo não encontrado para copiar: {origem_audio_path}")
-                except Exception as e:
-                    print(f"Erro inesperado ao copiar o áudio {filename}: {e}")
-
-    return "Dados de dublador inseridos e áudios .wav copiados com sucesso!"
-
- def insere_lol(dubladores_collection, audios_collection):
     dubladores = [
         ["Aatrox", "Hércules Franco	", "Masculino", "Adulto"],
         ["Ahri","Miriam Ficher", "Feminino", "Adulto"],
         ["Akali", "Adriana Torres", "Feminino", "Adulto"],
         ["Akshan", "Fábio Azevedo", "Masculino", "Adulto"],
         ["Alistar", "Leo Rabelo", "Masculino", "Adulto"],
-        ["Ambessa Medarda", "Marilza Batista", "Feminino", "Adulto"],
+        ["Ambessa", "Marilza Batista", "Feminino", "Adulto"],
         ["Amumu", "Luiz Sergio Vieira", "Masculino", "Adulto"],
         ["Anivia", "Lucia Helena", "Feminino", "Adulto"],
         ["Annie", "Helena Palomanes", "Feminino", "Adulto"],
@@ -97,7 +101,7 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Aurelion Sol", "Gilberto Barolli", "Masculino", "Adulto"],
         ["Aurora","Mari Haruno", "Feminino", "Adulto"],
         ["Azir", "Fabio de Castro", "Masculino", "Adulto"],
-        ["Bel'Veth", "Marlene Costa", "Feminino", "Adulto"],
+        ["BelVeth", "Marlene Costa", "Feminino", "Adulto"],
         ["Blitzcrank", "Leonardo Santhos", "Masculino", "Adulto"],
         ["Brand", "Eduardo Dascar", "Masculino", "Adulto"],
         ["Braum", "Jonas Mello", "Masculino", "Adulto"],
@@ -105,15 +109,15 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Caitlyn", "Mabel Cezar", "Feminino", "Adulto"],
         ["Camille", "Roseli Silva", "Feminino", "Adulto"],
         ["Cassiopeia", "Luciana Baroli", "Feminino", "Adulto"],
-        ["Cho'Gath", "Dário de Castro", "Masculino", "Adulto"],
+        ["ChoGath", "Dário de Castro", "Masculino", "Adulto"],
         ["Corki", "Isaac Bardavid", "Masculino", "Idoso"],
         ["Darius", "Ricardo Telles", "Masculino", "Adulto"],
         ["Diana", "Rosa Maria Baroli", "Feminino", "Adulto"],
-        ["Dr. Mundo", "Nardo Sierpe", "Masculino", "Adulto"],
+        ["DrMundo", "Nardo Sierpe", "Masculino", "Adulto"],
         ["Draven", "Ricardo Juarez", "Masculino", "Adulto"],
         ["Ekko", "Marcelo Campos", "Masculino", "Adulto"],
         ["Elise", "Adriana Pissardini", "Feminino", "Adulto"],
-        ["Evelynn", "Luisa Palomanes", "Feminino", "Adulto"],
+        ["Evelyn", "Luisa Palomanes", "Feminino", "Adulto"],
         ["Ezreal", "Anderson Oliveira", "Masculino", "Adulto"],
         ["Fiddlesticks", "Philippe Maia", "Masculino", "Adulto"],
         ["Fiora", "Marli Bortoletto", "Feminino", "Adulto"],
@@ -129,7 +133,7 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Illaoi", "Luísa Viegas", "Feminino", "Adulto"],
         ["Irelia", "Mariana Torres", "Feminino", "Adulto"],
         ["Janna", "Jullie Vasconcelos", "Feminino", "Adulto"],
-        ["Jarvan IV", "Christiano Torreão", "Masculino", "Adulto"],
+        ["JarvanIV", "Christiano Torreão", "Masculino", "Adulto"],
         ["Jax", "Waldyr Sant'anna", "Masculino", "Adulto"],
         ["Jayce", "Malta Júnior", "Masculino", "Adulto"],
         ["Jinx", "Fernanda Bullara", "Feminino", "Adulto"],
@@ -141,9 +145,9 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Kayle", "Carla Pompílio", "Feminino", "Adulto"],
         ["Kennen", "Luisa Palomanes", "Masculino", "Infantil"],
         ["Kindred", "Rebeca Zadra", "Feminino", "Adulto"],
-        ["Kog'Maw", "Leonardo Santhos", "Masculino", "Infantil"],
+        ["KogMaw", "Leonardo Santhos", "Masculino", "Infantil"],
         ["LeBlanc", "Carol Crespo", "Feminino", "Adulto"],
-        ["Lee Sin", "Wendel Bezerra", "Masculino", "Adulto"],
+        ["LeeSin", "Wendel Bezerra", "Masculino", "Adulto"],
         ["Leona", "Angélica Borges", "Feminino", "Adulto"],
         ["Lissandra", "Alessandra Araújo", "Feminino", "Adulto"],
         ["Lucian", "Marco Antônio Abreu", "Masculino", "Adulto"],
@@ -152,8 +156,8 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Malphite", "Rodrigo Oliveira", "Masculino", "Adulto"],
         ["Malzahar", "Renato Rosenberg", "Masculino", "Adulto"],
         ["Maokai", "Waldyr Sant'anna", "Masculino", "Adulto"],
-        ["Master Yi", "Dário de Castro", "Masculino", "Adulto"],
-        ["Miss Fortune", "Maíra Góes", "Feminino", "Adulto"],
+        ["MasterYi", "Dário de Castro", "Masculino", "Adulto"],
+        ["MissFortune", "Maíra Góes", "Feminino", "Adulto"],
         ["Mordekaiser", "José Santa Cruz", "Masculino", "Adulto"],
         ["Morgana", "Marisa Leal", "Feminino", "Adulto"],
         ["Nami", "Michelle Giudice", "Feminino", "Adulto"],
@@ -183,7 +187,7 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Soraka", "Izabel Lira", "Feminino", "Adulto"],
         ["Swain", "Carlos Seidl", "Masculino", "Adulto"],
         ["Syndra", "Raquel Marinho", "Feminino", "Adulto"],
-        ["Tahm Kench", "Mauro Castro", "Masculino", "Adulto"],
+        ["TahmKench", "Mauro Castro", "Masculino", "Adulto"],
         ["Talon", "Leo Rabelo", "Masculino", "Adulto"],
         ["Taric", "Duda Espinoza", "Masculino", "Adulto"],
         ["Teemo", "Eduardo Drummond", "Masculino", "Infantil"],
@@ -198,7 +202,7 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Varus", "Paulo Vignolo", "Masculino", "Adulto"],
         ["Vayne", "Priscila Amorim", "Feminino", "Adulto"],
         ["Veigar", "Pedro Lopes", "Masculino", "Infantil"],
-        ["Vel'Koz", "Leonardo Santhos", "Masculino", "Adulto"],
+        ["VelKoz", "Leonardo Santhos", "Masculino", "Adulto"],
         ["Vi", "Tatiane Keplmair", "Feminino", "Adulto"],
         ["Viktor", "Francisco José", "Masculino", "Adulto"],
         ["Vladimir", "Ricardo Schnetzer", "Masculino", "Adulto"],
@@ -206,7 +210,7 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Warwick", "Luiz Carlos Persy", "Masculino", "Adulto"],
         ["Wukong", "Leonardo Santhos", "Masculino", "Adulto"],
         ["Xerath", "Pietro Mário", "Masculino", "Adulto"],
-        ["Xin Zhao", "Júlio Chaves", "Masculino", "Adulto"],
+        ["XinZhao", "Júlio Chaves", "Masculino", "Adulto"],
         ["Yasuo", "Marco Antônio Abreu", "Masculino", "Adulto"],
         ["Yorick", "Mauro Ramos", "Masculino", "Adulto"],
         ["Zac", "Affonso Amajones", "Masculino", "Adulto"],
@@ -216,12 +220,12 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Zyra", "Fernanda Crispim", "Feminino", "Adulto"]
         ]
 
-       
-
-
-        
-        
-    return "Dados de dublador inseridos com sucesso no ChromaDB!"
+    return coleta_audios(
+        dubladores,
+        audios_collection,
+        dubladores_collection,
+        "audios/lol/"
+    )
 
 
 

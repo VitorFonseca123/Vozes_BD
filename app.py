@@ -40,6 +40,7 @@ dub = Dubladores_Collection.get(include=["documents", "metadatas"])
 if not dub['documents']:
     print("Nenhuma característica encontrada, inserindo as características padrão...")
     operacoesDB.insere_EDM(Dubladores_Collection, Audios_Collection)
+    operacoesDB.insere_lol(Dubladores_Collection, Audios_Collection)
 #operacoesDB.insere_audios(collection)
 
 @app.route('/processa_dados', methods=['POST'])
@@ -120,10 +121,30 @@ def busca():
 
     docs_para_template = [json.loads(doc) for doc in resultado['documents'][0]]
     metas_para_template = resultado['metadatas'][0]
-    dists_para_template = resultado['distances'][0]
+    raw_dists_para_template = resultado['distances'][0]
     #print(resultado['documents'][0])
-    
-    return render_template('similares.html', resultados_combinados=zip(metas_para_template, docs_para_template, dists_para_template), audio_path=audio_path)
+    D_max = 1
+    similaridades_para_template = []
+    for dist in raw_dists_para_template:
+        # Fórmula: (1 - (dist / D_max)) * 100
+        # Isso assume que 0 distância = 100% similaridade e D_max = 0% similaridade
+        
+        if D_max == 0: # Evitar divisão por zero se D_max for 0 (pode acontecer se todas as distâncias forem 0)
+            similarity_percentage = 100.0
+        else:
+            similarity_percentage = (1 - (dist / D_max)) * 100
+        
+        # Garante que a porcentagem não seja negativa (se dist > D_max) nem maior que 100
+        similarity_percentage = max(0.0, min(100.0, similarity_percentage))
+        
+        similaridades_para_template.append(similarity_percentage) 
+
+    # Agora, você passa as similaridades calculadas para o template
+    return render_template(
+        'similares.html', 
+        resultados_combinados=zip(metas_para_template, docs_para_template, similaridades_para_template), 
+        audio_path=audio_path
+    )
 @app.route('/')
 def formulario():
     return render_template('form.html')
