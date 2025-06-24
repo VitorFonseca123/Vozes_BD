@@ -16,12 +16,12 @@
     <table border="1">
         <thead>
             <tr>
-                <th>Nome</th>
+                <th>Dublador</th>
+                <th>Personagem</th>
                 <th>Frequência Média</th>
                 <th>Tom Médio</th>
                 <th>Caminho do Áudio</th>
                 <th>Similaridade</th>
-                <th>Dublador</th>
                 <th>Reproduzir Áudio</th>
             </tr>
         </thead>
@@ -29,12 +29,21 @@
              {% for metadata, document, distance in resultados_combinados %} 
             
             <tr>
+                <td>
+                    {% set name_parts = metadata.dublador.replace("id_", "").split(' ') %}
+                    {% set formatted_parts = [] %}
+                    {% for part in name_parts %}
+                        {% set _ = formatted_parts.append(part.capitalize()) %}
+                    {% endfor %}
+                    
+                    {{ formatted_parts | join(' ') }}
+                </td>
                 <td>{{ metadata.nome }}</td> 
                 <td>{{ "%.2f" | format(document.frequencia_media) }}</td> 
                 <td>{{ "%.2f" | format(document.tom_medio) }}</td> 
                 <td>{{ metadata.audio_path }}</td> 
                  <td>{{ "%.6f" | format(distance) }}%</td> 
-                <td>{{ metadata.dublador }}</td>
+                
                 <td>
                         <audio controls>
                             <source src="{{ metadata.audio_path.replace('./', '../') }}" type="audio/mp3">
