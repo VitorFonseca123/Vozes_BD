@@ -144,6 +144,10 @@ def busca():
         resultados_combinados=zip(metas_para_template, docs_para_template, similaridades_para_template), 
         audio_path=audio_path
     )
+
+@app.route('/dublador/<dublador_id>')
+def mostrar_detalhes_dublador(dublador_id):
+    return f"Você clicou no dublador com ID: {dublador_id}"
 @app.route('/')
 def formulario():
     return render_template('form.html')
