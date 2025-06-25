@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Formulário</title>
 </head>
 <body>
+    <h1>Formulário para envio de áudio
+        <div>
+            <a href= "/recuperar_dados" id = "links"> Ir para dados</a>
+            <a href= "/busca" id = "links"> Ir para busca</a>
+            <a href= "/" id = "links"> Ir para envio</a>
+        </div>
+    
+    </h1>
     <!-- <h1>Enviar Dados para ChromaDB</h1> -->
     <form action="/processa_dados" method="post" enctype="multipart/form-data">
         <label for="nome">Nome:</label>
@@ -19,14 +28,10 @@
 
         <button type="submit">Enviar</button>
     </form>
-    </td>
-    </td>
-    <button onclick="recuperar_dados()">Ir para dados</button>
-
-<script>
-function recuperar_dados() {
-    window.location.href = "/recuperar_dados"; // Substitua com a URL desejada
-}
+   
+    
+    
+    
 </script>
 </body>
 </html>
