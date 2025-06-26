@@ -147,6 +147,18 @@ def busca():
 
 @app.route('/dublador/<dublador_id>')
 def mostrar_detalhes_dublador(dublador_id):
+    dublador_id = dublador_id.replace(' ', '_')
+    #print(f"ID do dublador recebido: {dublador_id}")
+
+    dublador = Dubladores_Collection.get(ids=[dublador_id], include=["documents", "metadatas"])
+    #print(dublador)
+    
+    nome = dublador['metadatas'][0].get('nome')
+    faixa_etaria = dublador['metadatas'][0].get('dub_idade')
+    genero = dublador['metadatas'][0].get('dub_genero')
+
+    
+    print(faixa_etaria)
     return f"Você clicou no dublador com ID: {dublador_id}"
 @app.route('/')
 def formulario():
