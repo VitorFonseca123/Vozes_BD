@@ -158,8 +158,8 @@ def mostrar_detalhes_dublador(dublador_id):
     genero = dublador['metadatas'][0].get('dub_genero')
 
     
-    print(faixa_etaria)
-    return f"Você clicou no dublador com ID: {dublador_id}"
+    #print(faixa_etaria)
+    return render_template('dublador.html', nome = nome, faixa_etaria=faixa_etaria, genero=genero)
 @app.route('/')
 def formulario():
     return render_template('form.html')
