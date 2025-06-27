@@ -67,7 +67,7 @@ def processa_dados():
 @app.route('/recuperar_dados')
 def recuperar_dados():
     resultados = Audios_Collection.get(include=["documents", "metadatas"])
-    print(resultados['documents'])
+    #print(resultados['documents'])
     documentos = [json.loads(doc) for doc in resultados['documents']]
     #print(documentos)
     return render_template('recupera.html', resultados=resultados, documentos=documentos, zip=zip)
@@ -147,6 +147,9 @@ def busca():
 
 @app.route('/dublador/<dublador_id>')
 def mostrar_detalhes_dublador(dublador_id):
+
+    audios = Audios_Collection.get(include=['documents', 'metadatas'], where= {"dublador": dublador_id})
+    
     dublador_id = dublador_id.replace(' ', '_')
     #print(f"ID do dublador recebido: {dublador_id}")
 
@@ -156,10 +159,14 @@ def mostrar_detalhes_dublador(dublador_id):
     nome = dublador['metadatas'][0].get('nome')
     faixa_etaria = dublador['metadatas'][0].get('dub_idade')
     genero = dublador['metadatas'][0].get('dub_genero')
+    
+    
+    documentos = [json.loads(doc) for doc in audios['documents']]
+    
 
     
     #print(faixa_etaria)
-    return render_template('dublador.html', nome = nome, faixa_etaria=faixa_etaria, genero=genero)
+    return render_template('dublador.html', nome = nome, faixa_etaria=faixa_etaria, genero=genero,resultados = audios, documentos=documentos, audios=audios, zip=zip)
 @app.route('/')
 def formulario():
     return render_template('form.html')
