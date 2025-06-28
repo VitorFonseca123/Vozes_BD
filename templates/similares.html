@@ -8,7 +8,13 @@
     <script src="{{ url_for('static', filename='recuperar.js') }}"></script>
 </head>
 <body>
-    <h1>Audios similares</h1>
+    <h1>Audios similares
+        <div>
+            <a href= "/recuperar_dados" id = "links"> Banco de Dados</a>
+            <a href= "/busca" id = "links"> Busca por similaridade</a>
+            <a href= "/" id = "links"> Formulário de inserção</a>
+        </div>
+    </h1>
     <audio controls>
             <source src="{{ audio_path.replace('./', '../') }}" type="audio/mp3">
                     Seu navegador não suporta o elemento de áudio.
