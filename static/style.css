@@ -47,35 +47,11 @@ h1{
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  color: #141619;
 }
 #links{
   display: flex;
   flex-direction: row-reverse;
   justify-self: flex-end;
   padding: 0rem 2rem;
-  color: #0a21c0;
-  font-size:xx-large;
-}
-  #links:hover{
-    color:red ;
-  }
-  #links:active{
-    color:yellow ;
-  }
-body{
-  font-family: 'inter', sans-serif;
-  font-size:xxx-large;
-  background-color: #B3b4bd;
-  color: #141619;
-  text-align: center;
-}
-button{
-  font-size: xx-large;
-}
-input{
-  font-size: xx-large;
-}
-table{
-  font-size: xx-large;
+  
 }
