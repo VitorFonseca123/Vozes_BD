@@ -35,12 +35,8 @@
                     {% for part in name_parts %}
                         {% set _ = formatted_parts.append(part.capitalize()) %}
                     {% endfor %}
-                    <a href="{{ url_for('mostrar_detalhes_dublador', dublador_id=metadata.dublador) }}">
-                        {{ formatted_parts | join(' ') }}
-                    </a>
                     
-
-                    
+                    {{ formatted_parts | join(' ') }}
                 </td>
                 <td>{{ metadata.nome }}</td> 
                 <td>{{ "%.2f" | format(document.frequencia_media) }}</td> 

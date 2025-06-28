@@ -10,7 +10,7 @@ def insertion(collection, audio_path, nome, dublador):
     collection.add(
             documents=[audio_carac_json],  
             embeddings=embeddings,
-            metadatas=[{"dublador": "id_" + dublador.replace(" ", "_").lower(), "nome": nome, "audio_path": audio_path.replace("\\", "/")}],
+            metadatas=[{"dublador": "id_"+dublador, "nome": nome, "audio_path": audio_path.replace("\\", "/")}],
             ids=["id_" + audio_path]
             )
     #print(collection.get(include=["documents", "metadatas"]))
