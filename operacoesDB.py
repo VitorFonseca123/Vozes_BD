@@ -72,7 +72,6 @@ def insere_EDM(dubladores_collection, audios_collection):
     dubladores = [
         ["Agatha", "Karen Padrão", "Feminino", "Adulto"],
         ["Jaser", "Raphael Rossatto", "Masculino", "Adulto"],
-        ["Lupi", "Lobinho", "Masculino", "Adulto"],
         ["Mia", "Pamella Rodrigues", "Feminino", "Adulto"],
         ["Samuel", "Fred Mascarenhas", "Masculino", "Adulto"],
         ["Verissimo", "Guilherme Briggs", "Masculino", "Adulto"]
@@ -125,7 +124,6 @@ def insere_lol(dubladores_collection, audios_collection):
         ["Gnar", "Úrsula Bezerra", "Feminino", "Infantil"],
         ["Gragas", "Flávio Back", "Masculino", "Adulto"],
         ["Graves", "Élcio Romar", "Masculino", "Adulto"],
-        ["Hecarim", "Ricardo Juarez", "Masculino", "Adulto"],
         ["Heimerdinger", "André Belizar", "Masculino", "Adulto"],
         ["Illaoi", "Luísa Viegas", "Feminino", "Adulto"],
         ["Irelia", "Mariana Torres", "Feminino", "Adulto"],
