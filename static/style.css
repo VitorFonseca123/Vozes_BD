@@ -1,3 +1,71 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #303050;
+  color: white;
+  padding: 40px;
+}
+
+h1 {
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  background:#00adb5;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 40px auto 20px auto;
+  max-width: 800px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 2px black;
+}
+
+form {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  max-width: 800px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+form input,
+form button,
+form label {
+  font-size: 1.3rem;
+}
+
+input {
+  width: 95%
+}
+
+input, button {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+input[type="file"] {
+  background-color: #fff;
+}
+button {
+  background-color: #00adb5;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #007f86;
+}
+
+a {
+  color: #00adb5;
+  font-weight: bold;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
 .td-excluir{
     border: 0px;
 }
@@ -48,10 +116,58 @@ h1{
   justify-content: space-between;
   align-items: flex-start;
 }
-#links{
+/**#links{
   display: flex;
   flex-direction: row-reverse;
   justify-self: flex-end;
   padding: 0rem 2rem;
   
+}**/
+
+.menu-lateral {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 50px;
+  background-color: #1e1e2f;
+  padding: 10px 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+  transition: width 0.3s ease;
+  overflow-x: hidden; /* Evita overflow horizontal */
+  z-index: 1000;
+}
+
+.menu-lateral:hover {
+  width: 300px;
+  padding: 20px 10px;
+}
+
+.menu-lateral a {
+  display: flex; /* Permite separar ícone/texto se quiser */
+  align-items: center;
+  color: #00adb5;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  overflow: hidden;       /* Importante para esconder textos */
+  text-overflow: clip;    /* Evita reticências */
+  width: 100%;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.menu-lateral span {
+  opacity: 0;
+  visibility: hidden;
+  margin-left: 8px;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-lateral:hover span {
+  opacity: 1;
+  visibility: visible;
 }
