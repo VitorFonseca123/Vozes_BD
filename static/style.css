@@ -65,7 +65,10 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
+table{
+  font-size: xx-large;
+  width: 100%;
+}
 .td-excluir{
     border: 0px;
 }
