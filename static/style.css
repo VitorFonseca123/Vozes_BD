@@ -31,7 +31,7 @@ form {
 form input,
 form button,
 form label {
-  font-size: 1.3rem;
+  font-size: xx-large;
 }
 
 input {
@@ -72,7 +72,7 @@ table{
   border-collapse: collapse;
 }
 table th{
-  background-color: #405030;
+  background-color: #00479c;
 }
 table tr:nth-child(even){
   background-color: #304050;
