@@ -65,6 +65,7 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
 table{
   font-size: xx-large;
   width: 100%;
@@ -161,6 +162,14 @@ h1{
   text-overflow: clip;    /* Evita reticências */
   width: 100%;
   transition: background-color 0.3s, transform 0.2s;
+}
+
+.menu-lateral a:hover{
+  color:crimson;
+}
+
+.menu-lateral a:active{
+  color:gold;
 }
 
 .menu-lateral span {
