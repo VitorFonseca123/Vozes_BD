@@ -123,7 +123,7 @@ def busca():
     docs_para_template = [json.loads(doc) for doc in resultado['documents'][0]]
     metas_para_template = resultado['metadatas'][0]
     raw_dists_para_template = resultado['distances'][0]
-    print(resultado['documents'][0])
+    #print(resultado)
     D_max = 1
     similaridades_para_template = []
     for dist in raw_dists_para_template:
@@ -139,12 +139,8 @@ def busca():
         
         similaridades_para_template.append(similarity_percentage)
 
-    #nome_audio = audio.filename
-    #audio_doc = Audios_Collection.get(where={'nome': nome_audio})  
-    #dublador_id = audio_doc['metadata']['dublador']
-    #dublador_nome = dublador_id.replace("id_", "").replace("_", " ").title()
-    #print(avaliacao.precisao(dublador_nome, similaridades_para_template))
-    #print(avaliacao.revocacao(dublador_nome, similaridades_para_template))
+    print(avaliacao.precisao(resultado))
+    print(avaliacao.revocacao(resultado))
     
     return render_template(
         'similares.html', 
