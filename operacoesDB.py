@@ -175,7 +175,7 @@ def insere_lol(dubladores_collection, audios_collection):
         ["Swain", "Carlos Seidl", "Masculino", "Adulto"],
         ["Syndra", "Raquel Marinho", "Feminino", "Adulto"],
         ["TahnKench", "Mauro Castro", "Masculino", "Adulto"],
-        ["Talon", "Leo Rabelo", "Masculino", "Adulto"],
+        ["Talon", "Travis Willingham", "Masculino", "Adulto"],
         ["Taric", "Duda Espinoza", "Masculino", "Adulto"],
         ["Teemo", "Eduardo Drummond", "Masculino", "Infantil"],
         ["Thresh", "César Marchetti", "Masculino", "Adulto"],
