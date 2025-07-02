@@ -185,7 +185,7 @@ def insere_lol(dubladores_collection, audios_collection):
         ["Twisted Fate", "Eduardo Dascar", "Masculino", "Adulto"],
         ["Twitch", "José Leonardo", "Masculino", "Adulto"],
         ["Udyr", "Walmir Barbosa", "Masculino", "Adulto"],
-        ["Urgot", "Flávio Back", "Masculino", "Adulto"],
+        ["Urgot", "Márcio Dondi", "Masculino", "Adulto"],
         ["Varus", "Paulo Vignolo", "Masculino", "Adulto"],
         ["Vayne", "Priscila Amorim", "Feminino", "Adulto"],
         ["Veigar", "Pedro Lopes", "Masculino", "Infantil"],
