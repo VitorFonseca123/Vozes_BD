@@ -31,7 +31,7 @@ form {
 form input,
 form button,
 form label {
-  font-size: 1.3rem;
+  font-size: xx-large;
 }
 
 input {
@@ -65,9 +65,20 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
 table{
   font-size: xx-large;
   width: 100%;
+  border-collapse: collapse;
+}
+table th{
+  background-color: #00479c;
+}
+table tr:nth-child(even){
+  background-color: #304050;
+}
+table tr:hover{
+  background-color: #403050;
 }
 .td-excluir{
     border: 0px;
@@ -77,7 +88,7 @@ table{
     color: white;
     border: none;
     padding: 10px 20px;
-    font-size: 16px;    
+    font-size: x-large;    
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -100,7 +111,7 @@ table{
     color: white;
     border: none;
     padding: 10px 20px;
-    font-size: 16px;    
+    font-size: x-large;    
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -161,6 +172,14 @@ h1{
   text-overflow: clip;    /* Evita reticências */
   width: 100%;
   transition: background-color 0.3s, transform 0.2s;
+}
+
+.menu-lateral a:hover{
+  color:crimson;
+}
+
+.menu-lateral a:active{
+  color:gold;
 }
 
 .menu-lateral span {
