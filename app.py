@@ -145,7 +145,7 @@ def busca():
     return render_template(
         'similares.html', 
         resultados_combinados=zip(metas_para_template, docs_para_template, similaridades_para_template), 
-        audio_path=audio_path
+        audio_path=audio_path, precisao=avaliacao.precisao(resultado), revocacao=avaliacao.revocacao(resultado)
     )
 
 @app.route('/dublador/<dublador_id>')

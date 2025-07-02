@@ -137,6 +137,7 @@ def insere_lol(dubladores_collection, audios_collection):
         ["Karthus", "Isaac Bardavid", "Masculino", "Idoso"],
         ["Katarina", "Silvia Goiabeira", "Feminino", "Adulto"],
         ["Kayle", "Carla Pompílio", "Feminino", "Adulto"],
+        ["Kayn", "Raphael Rossatto", "Masculino", "Adulto"],
         ["Kennen", "Luisa Palomanes", "Feminino", "Adulto"],
         ["LeBlanc", "Carol Crespo", "Feminino", "Adulto"],
         ["LeeSin", "Wendel Bezerra", "Masculino", "Adulto"],

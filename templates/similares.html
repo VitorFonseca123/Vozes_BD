@@ -13,6 +13,8 @@
             <source src="{{ audio_path.replace('./', '../') }}" type="audio/mp3">
                     Seu navegador não suporta o elemento de áudio.
         </audio>
+    <p>Precisão: {{ "%.2f" | format(precisao) }}%</p>
+    <p>Revocação: {{ "%.2f" | format(revocacao) }}%</p>
     <table border="1">
         <thead>
             <tr>
