@@ -74,7 +74,8 @@ def insere_EDM(dubladores_collection, audios_collection):
         ["Jaser", "Raphael Rossatto", "Masculino", "Adulto"],
         ["Mia", "Pamella Rodrigues", "Feminino", "Adulto"],
         ["Samuel", "Fred Mascarenhas", "Masculino", "Adulto"],
-        ["Verissimo", "Guilherme Briggs", "Masculino", "Adulto"]
+        ["Verissimo", "Guilherme Briggs", "Masculino", "Adulto"],
+        ["Vitor","Vitor", "Masculino", "Adulto"]
     ]
     return coleta_audios(
         dubladores,
